@@ -2,12 +2,8 @@
 
 using namespace std;
 
-int m, n, a, b, x, y, dd[1001][1001] = {}, cld[5] = {0, -1, 1, 0, 0}, clc[5] = {0, 0, 0, 1, -1};
-struct data 
-{
-	int I, J;
-};
-data tr[1001][1001];
+int m, n, dd[1001][1001] = {}, cld[5] = {0, 1, -1, 0, 0}, clc[5] = {0, 0, 0, 1, -1};
+
 
 void bfs(int i, int j)
 {
@@ -27,37 +23,47 @@ void bfs(int i, int j)
 			if (dd[I][J] == 0)
 			{
 				dd[I][J] = dd[u][v] + 1;
-				tr[I][J].I = u;
-				tr[I][J].J = v;
 				q.push(I);
 				q.push(J);
 			}
 		}
 	}
-} 
+}
+
+void dfs (int i, int j, int a)
+{
+	dd[i][j] = dd[i][j] + a;
+	for (int k = 1; k <= 4; k++)
+		{
+			int I = i + clc[k]; int J = j + cld[k];
+			if (dd[I][J] == 0)
+			{
+				dfs(I, J, a + 1);
+			}
+		}
+}
 
 int main ()
 {
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
 	cout.tie(0);
-	freopen("bfs.inp", "r", stdin);
-	//freopen("bfs.out", "w", stdout);
-	cin >> m >> n >> a >> b >> x >> y;
+	freopen("biggest_area.inp", "r", stdin);
+	cin >> m >> n;
 	for (int i = 0; i <= m + 1; i++)
 	{
 		for (int j = 0; j <= n + 1; j++)
 		{
-			dd[i][j] = 1;
+			dd[i][j] = -1;
 		}
 	}
 	for (int i = 1; i <= m; i++)
 	{
 		for (int j = 1; j <= n; j++)
 		{
-			char u;
+			int u;
 			cin >> u;
-			if (u == '1')
+			if (u == 0)
 			{
 				dd[i][j] = -1;
 			}
@@ -67,25 +73,24 @@ int main ()
 			}
 		}
 	}
-	bfs(a, b);
-	tr[a][b].I = tr[a][b].J = -1;
-	if (dd[x][y] == 0)
+	for (int i = 1; i <= m; i++)
 	{
-		cout << -1;
-		exit(0);
+		for (int j = 1; j <= n; j++)
+		{
+			if (dd[i][j] == 0)
+			{
+				dfs(i, j, 1);
+			}
+		}
 	}
 	
-	vector <data> c;
-	while (x != -1)
+	int d = dd[1][1];
+	for (int i = 1; i <= m; i++)
 	{
-		c.push_back({x, y});
-		x = tr[x][y].I;
-		y = tr[x][y].J;
+		for (int j = 1; j <= n; j++)
+		{
+			d = max(d, dd[i][j]);
+		}
 	}
-	
-	for (int i = c.size() - 1; i >= 0; i--)
-	{
-		cout << c[i].I << " " << c[i].J;
-		cout << '\n';
-	}
+	cout << d;
 }
