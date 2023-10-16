@@ -41,7 +41,7 @@ int main ()
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
 	cout.tie(0);
-	freopen("bfs.inp", "r", stdin);
+	freopen("BFS.inp", "r", stdin);
 	//freopen("bfs.out", "w", stdout);
 	cin >> m >> n >> a >> b >> x >> y;
 	for (int i = 0; i <= m + 1; i++)
