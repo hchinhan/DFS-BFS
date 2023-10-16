@@ -48,7 +48,7 @@ int main ()
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
 	cout.tie(0);
-	freopen("biggest_area.inp", "r", stdin);
+	freopen("DFS.inp", "r", stdin);
 	cin >> m >> n;
 	for (int i = 0; i <= m + 1; i++)
 	{
